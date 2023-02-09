@@ -1,0 +1,82 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+img{
+    size: 100px;
+    width: auto;
+}
+.header{
+    background-color: blanchedalmond;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 6rem;
+}
+.player-choice-image{
+    height: 100px;
+    width: auto;
+}
+
+.game-board{
+    left: calc(50vw - 300px);
+    position: absolute;
+    width: 600px;
+    height: auto;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 4;
+
+}
+.body{
+    height: 600px;
+    width: 600px;
+    background-image: url('../game_board.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 200px 200px 200px;
+}
+.message, .play-again{
+    height: 10vh;
+    width: 50rem;
+    justify-content: center;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 6rem;
+}
+.selectable:hover, .board-spot:hover{
+    background-color: aqua;
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 225, 169);
+    color: rgb(0,0,0);
+    text-align: center;
+    text-justify: center;
+    font-size: 1.3rem;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100vw;
+    height: 3rem;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
