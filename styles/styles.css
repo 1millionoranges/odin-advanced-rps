@@ -52,10 +52,15 @@ img{
     font-weight: bold;
     font-size: 6rem;
 }
-.selectable:hover, .board-spot:hover{
+.selectable:hover{
     background-color: aqua;
 }
-
+.xturn:hover{
+    background-image: url('../assets/xplaceholder.png');
+}
+.oturn:hover{
+    background-image: url('../assets/oplaceholder.png');
+}
 .footer{
     display: flex;
     flex-direction: column;

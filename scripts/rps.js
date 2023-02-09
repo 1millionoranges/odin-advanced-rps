@@ -1,4 +1,4 @@
-console.log('init')
+
 let in_play = true
 const makeBoard = () => {
     this.board_state = [[0,0,0],[0,0,0],[0,0,0]];
@@ -46,8 +46,27 @@ const makeBoard = () => {
         if (a[0][0] != 0 && a[0][0] == a[1][1] && a[0][0] == a[2][2]) { return a[0][0]}
         if (a[0][2] != 0 && a[0][2] == a[1][1] && a[0][2] == a[2][0]) { return a[0][2]}
     }
+    const check_full = () => {
+        for(let i = 0; i < 3; i++){
+            for(let j = 0; j< 3; j++){
+                if(board_state[i][j] == 0){
+                    return false
+                }
+            }
+        }
+        return true;
+    }
     const find_winner = () => {
         let winner = check_diagonal_winner() || check_horizontal_winner() || check_vertical_winner()
+        if(!winner){ 
+            if(check_full()){
+                messages_element.innerHTML = "TIE";
+                in_play = false;
+                play_again_element.innerHTML = "PLAY AGAIN?";
+                play_again_holder.classList.add('selectable');
+                play_again_element.addEventListener('click', reset_game);
+            }
+        }
         if(winner) {
             in_play = false;
             play_again_element.innerHTML = "PLAY AGAIN?";
@@ -68,36 +87,52 @@ let b = makeBoard();
 let current_player = 'x';
 
 function buttonFunction(e){
-    let id = e.target.getAttribute("id");
-    let target_class = e.target.getAttribute("class");
+    let target_class = e.target.classList;
+
     if (in_play){
-        if (target_class == "board-spot"){
-            e.target.setHTML( "<img src=\"./" + current_player + ".png\">");
+        if (target_class.contains("board-spot")){
+            let id = e.target.id
+
+            e.target.setHTML( "<img src=\"./assets/" + current_player + (Math.floor(Math.random() * 9) + 1) + ".png\">");
             b.place_move_abs(id, current_player);
-            if(current_player == 'x'){
-            current_player = 'o'; 
-            }else{
-                current_player = 'x';
-            }
+            change_player();
 
 
         }
     }
 }
 function add_buttons(){
-    const board_spots = document.querySelectorAll('.board-spot')
+    let board_spots = document.querySelectorAll('.board-spot')
     board_spots.forEach((spot) => {
-        console.log(spot.getAttribute("class"));
+        spot.className = "xturn board-spot"
         spot.addEventListener('click', buttonFunction, true)
     })
 }
+function change_player(){
+    let board_spots = document.querySelectorAll('.board-spot')
+    if(current_player == 'x'){
+        current_player = 'o'; 
+    }else{
+        current_player = 'x';
+    }
+    board_spots.forEach ( (spot) => {
+        if(spot.childElementCount < 1){
+            spot.className = current_player + "turn board-spot";
+        }else{
+            spot.className = "board-spot"
+        }
+    })
+    
+}
 
+let board_spots = document.querySelectorAll('.board-spot')
 add_buttons();
 const game_board_element = document.querySelector('.body')
 const messages_element = document.querySelector('.message')
 const play_again_element = document.querySelector('.play-again')
 const play_again_holder = document.querySelector('.play-agains');
 function reset_game(){
+    current_player = 'o';
     messages_element.innerHTML = "";
     play_again_element.innerHTML = "";
     play_again_holder.classList.remove('selectable');
@@ -105,8 +140,13 @@ function reset_game(){
     
     game_board_element.innerHTML = "";
     for(var i = 1; i <= 9 ; i++){
-        game_board_element.innerHTML += "<div class=\"board-spot\" id=\"" + i + "\"><\div>";
+        let my_spot = document.createElement("div")
+        my_spot.className = "board-spot"
+        my_spot.id = i
+        game_board_element.appendChild(my_spot);
     }
+    
     add_buttons();
+    change_player();
     play_again_element.removeEventListener('click', reset_game);
 }
